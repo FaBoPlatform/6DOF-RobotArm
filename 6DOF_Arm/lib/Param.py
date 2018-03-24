@@ -3,7 +3,7 @@ BACKWARD = 0
 
 Waiting = 0
 Running = 1
-
+STOP = 2
 '''
 initilize value
 '''
