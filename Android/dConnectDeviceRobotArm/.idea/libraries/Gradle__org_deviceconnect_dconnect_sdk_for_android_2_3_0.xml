@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.deviceconnect:dconnect-sdk-for-android-2.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/dconnect-sdk-for-android-2.3.0.aar/59e7a38f3743afbfacb2e4f98a1c20ef/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/dconnect-sdk-for-android-2.3.0.aar/59e7a38f3743afbfacb2e4f98a1c20ef/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/dconnect-sdk-for-android-2.3.0.aar/59e7a38f3743afbfacb2e4f98a1c20ef/jars/libs/java_websocket.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

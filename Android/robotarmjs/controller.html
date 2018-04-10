@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>RobotArm-JS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <script src="lib/nipplejs.min.js" type="text/javascript"></script>
+        <script src="lib/dconnectsdk-2.2.0.js" type="text/javascript"></script>
+        <script src="lib/setting.js" type="text/javascript"></script>
+        <script src="control.js" type="text/javascript"></script>
+      </head>
+      <body>
+        <button id="arm0-1" type="submit" onclick="javascript:doArmForward(0,5,100,2000)">0正転</button>
+        <button id="arm0-2" type="submit" onclick="javascript:doArmReverse(0,5,100,2000)">0逆転</button>
+        <button id="arm0-3" type="submit" onclick="javascript:doArmStop(0);">0停める</button>
+        <br/>
+        <button id="arm1-1" type="submit" onclick="javascript:doArmForward(1,5,30,2000)">1正転</button>
+        <button id="arm1-2" type="submit" onclick="javascript:doArmReverse(1,5,30,2000)">1逆転</button>
+        <button id="arm1-3" type="submit" onclick="javascript:doArmStop(1);">1停める</button>
+        <br/>
+        <button id="arm2-1" type="submit" onclick="javascript:doArmForward(2,10,100,2000)">2正転</button>
+        <button id="arm2-2" type="submit" onclick="javascript:doArmReverse(2,10,100,2000)">2逆転</button>
+        <button id="arm2-3" type="submit" onclick="javascript:doArmStop(2);">2停める</button>
+        <br/>
+        <button id="arm3-1" type="submit" onclick="javascript:doArmForward(3,10,300,2000)">3正転</button>
+        <button id="arm3-2" type="submit" onclick="javascript:doArmReverse(3,10,300,2000)">3逆転</button>
+        <button id="arm3-3" type="submit" onclick="javascript:doArmStop(3);">3停める</button>
+        <br/>
+        <button id="arm4-1" type="submit" onclick="javascript:doArmForward(4,10,100,2000)">4正転</button>
+        <button id="arm4-2" type="submit" onclick="javascript:doArmReverse(4,10,100,2000)">4逆転</button>
+        <button id="arm4-3" type="submit" onclick="javascript:doArmStop(4);">4停める</button>
+        <br/>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,150,1000)">150掴む</button>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,200,1000)">200掴む</button>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,300,1000)">300掴む</button>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,400,1000)">400掴む</button>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,500,1000)">500掴む</button>
+        <button id="hand-1" type="submit" onclick="javascript:doHand(10,600,1000)">600掴む</button>
+        <button id="hand-3" type="submit" onclick="javascript:doHandStop();">停める</button>
+        <div id="left_joystick">
+        </div>
+        <div id="right_joystick">
+        </div>
+        <button id="release" type="submit">離す</button>
+        <button id="stop" type="submit">停める</button>
+        <button id="grab" type="submit">掴む</button>
+        <script src="main.js" type="text/javascript"></script>
+
+</body>
+</html>

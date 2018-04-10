@@ -1,0 +1,33 @@
+button#grab, #stop, #release {
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: #fff;
+  border-style: none;
+  box-shadow: 2px 2px 3px 1px #666;
+  -moz-box-shadow: 2px 2px 3px 1px #666;
+  -webkit-box-shadow: 2px 2px 3px 1px #666;
+  text-shadow: 1px 1px 2px #000;
+  background: -moz-linear-gradient(bottom, #36d, #248 50%, #36d);
+  background: -webkit-gradient(linear, left bottom, left top, from(#36d), color-stop(0.5, #248), to(#36d));
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+button#grab {
+  position: absolute; bottom: 10%; right: 10%;
+}
+button#stop {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+
+  transform: translate(-50%, 0%);
+}
+button#release {
+  position: absolute; bottom: 10%; left: 10%;
+}
