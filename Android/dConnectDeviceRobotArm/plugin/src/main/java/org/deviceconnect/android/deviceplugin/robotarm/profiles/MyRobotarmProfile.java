@@ -79,7 +79,6 @@ public class MyRobotarmProfile extends DConnectProfile {
                     MessageUtils.setIllegalDeviceStateError(response);
                     return true;
                 }
-                Log.d("ABC", frequency + ":" + speed +  ":" + duration);
                 arm.grabHand(frequency, speed, duration);
                 setResult(response, DConnectMessage.RESULT_OK);
                 return true;

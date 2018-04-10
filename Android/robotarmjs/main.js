@@ -42,7 +42,29 @@ function handleStopEvent (event) {
        clearInterval(handGrabInterval);
      }
 }
+function moveArmForLeftController(evt) {
+  if (evt.type === "dir:up") {
+    doArmForward(3,10,100, 10000);
+  } else if (evt.type === "dir:down") {
+    doArmReverse(3,10,100,10000);
+  } else if (evt.type === "dir:left") {
+    doArmForward(4,10,100,10000);
+  } else if (evt.type === "dir:right") {
+    doArmReverse(4,10,100,10000);
+  }
+}
 
+function moveArmForRightController(evt) {
+  if (evt.type === "dir:up") {
+    doArmForward(1,5,100,10000);
+  } else if (evt.type === "dir:down") {
+    doArmReverse(1,5,100,10000);
+  } else if (evt.type === "dir:left") {
+    doArmForward(0,5,100,10000);
+  } else if (evt.type === "dir:right") {
+    doArmReverse(0,5,100,10000);
+  }
+}
 document.getElementById("grab").addEventListener("mousedown", handleGrabEvent, false);
 document.getElementById("release").addEventListener("mousedown", handleReleaseEvent, false);
 document.getElementById("stop").addEventListener("mousedown", handleStopEvent, false);
@@ -50,7 +72,7 @@ document.getElementById("stop").addEventListener("mousedown", handleStopEvent, f
 var left = nipplejs.create({
       zone: document.getElementById('left_joystick'),
       mode: 'static',
-      position: {left: '30%', top: '30%'},
+      position: {left: '30%', top: '40%'},
       color: 'black'
 });
 left.on('start', function (evt, data) {
@@ -60,18 +82,11 @@ left.on('start', function (evt, data) {
           if (leftInterval !== null) {
             clearInterval(leftInterval);
           }
+          moveArmForLeftController(evt);
           leftInterval = setInterval(function(){
             console.log("left:" + evt.type);
-            if (evt.type === "dir:up") {
-              doArmForward(4,10,100,1000);
-            } else if (evt.type === "dir:down") {
-              doArmReverse(4,10,100,1000);
-            } else if (evt.type === "dir:left") {
-              doArmForward(4,10,100,1000);
-            } else if (evt.type === "dir:right") {
-              doArmReverse(4,10,100,1000);
-            }
-          }, 3000);
+            moveArmForLeftController(evt);
+          }, 10000);
 }).on('end', function (evt, data) {
       console.log("left:" + evt.type);
       clearInterval(leftInterval);
@@ -81,7 +96,7 @@ left.on('start', function (evt, data) {
 var right = nipplejs.create({
       zone: document.getElementById('right_joystick'),
       mode: 'static',
-      position: {left: '70%', top: '30%'},
+      position: {left: '70%', top: '40%'},
       color: 'black'
 });
 right.on('start', function (evt, data) {
@@ -91,18 +106,11 @@ right.on('start', function (evt, data) {
         if (rightInterval !== null) {
           clearInterval(rightInterval);
         }
+        moveArmForRightController(evt);
         rightInterval = setInterval(function(){
           console.log("right:" + evt.type);
-          if (evt.type === "dir:up") {
-            doArmForward(1,5,100,1000);
-          } else if (evt.type === "dir:down") {
-            doArmReverse(1,5,100,1000);
-          } else if (evt.type === "dir:left") {
-            doArmForward(0,5,100,1000);
-          } else if (evt.type === "dir:right") {
-            doArmReverse(0,5,100,1000);
-          }
-        }, 3000);
+          moveArmForRightController(evt);
+        }, 1000);
      }
 ).on('end', function (evt, data) {
       console.log("right:" + evt.type);

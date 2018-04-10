@@ -1,4 +1,0 @@
-#Tue Apr 10 13:43:51 JST 2018
-base.0=/Users/hoshit/Documents/project/sample/RobotArm/dConnectDeviceRobotArm/plugin/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex

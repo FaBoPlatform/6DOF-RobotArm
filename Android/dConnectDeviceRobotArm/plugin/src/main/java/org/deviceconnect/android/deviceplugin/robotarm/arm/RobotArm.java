@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.I2cDevice;
 import com.google.android.things.pio.PeripheralManager;
-import com.google.android.things.pio.Pwm;
 
 import org.deviceconnect.android.deviceplugin.robotarm.BuildConfig;
 
@@ -104,7 +103,7 @@ public class RobotArm implements IRobtArm {
                     try {
                         Thread.sleep((long) time);
                     } catch (InterruptedException e) {
-                        Log.e(TAG, "Interrupted1", e);
+                        Log.e(TAG, "Interrupted2", e);
                     }
                     setChannelValue(channel,  0, 0);
 
@@ -130,7 +129,7 @@ public class RobotArm implements IRobtArm {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                setHz(10);
+                setHz(hz);
                 setChannelValue(5,  0, value);
                 try {
                     Thread.sleep((long) 50);
@@ -197,14 +196,12 @@ public class RobotArm implements IRobtArm {
             Log.e(TAG, "PWM error", e);
         }
     }
-    private void setHz(int hz) {
-        getRegisterByHz(0);
+    private synchronized void setHz(int hz) {
         double prescaleval = 25000000.0;    // # 25MHz
         prescaleval /= 4096.0;       // # 12-bit
         prescaleval /= (float)hz;
         prescaleval -= 1.0;
         int prescale = (int)(Math.floor(prescaleval + 0.5));
-
         byte oldmode = 0;
         try {
             oldmode = mDevice.readRegByte(MODE1);
@@ -243,7 +240,7 @@ public class RobotArm implements IRobtArm {
         }
     }
 
-    private void setChannelValue(int channel, int on, int off) {
+    private synchronized void setChannelValue(int channel, int on, int off) {
         try {
             mDevice.writeRegByte(LED0_ON_L+channel*4, (byte) (on & 0xFF));
             mDevice.writeRegByte(LED0_ON_H+channel*4, (byte) (on >> 8));
