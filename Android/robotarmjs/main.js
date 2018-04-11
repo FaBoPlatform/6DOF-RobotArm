@@ -1,7 +1,7 @@
 var rightInterval;
 var leftInterval;
-var handGrabInterval;
-var handReleaseInterva;
+var strength = 300;
+/** 共通 **/
 function stopAllArmMove() {
   doArmStop(0);
   doArmStop(1);
@@ -10,66 +10,44 @@ function stopAllArmMove() {
   doArmStop(4);
 }
 function handleGrabEvent (event) {
-    if (handReleaseInterval !== null) {
-      clearInterval(handReleaseInterval);
+    if (strength < 400) {
+      strength += 10;
+      doHand(10,strength);
     }
-    if (handGrabInterval !== null) {
-      clearInterval(handGrabInterval);
-    }
-   handGrabInterval = setInterval(function(){
-     console.log("Grab");
-     // TODO 方向に合わせたリクエストを送り続ける
-   }, 3000);
 }
 function handleReleaseEvent (event) {
-    if (handReleaseInterval !== null) {
-      clearInterval(handReleaseInterval);
-    }
-    if (handGrabInterval !== null) {
-      clearInterval(handGrabInterval);
-    }
-    handReleaseInterval = setInterval(function(){
-      console.log("Release");
-      // TODO 方向に合わせたリクエストを送り続ける
-    }, 3000);
-}
-function handleStopEvent (event) {
-     console.log("Stop");
-     if (handReleaseInterval !== null) {
-       clearInterval(handReleaseInterval);
-     }
-     if (handGrabInterval !== null) {
-       clearInterval(handGrabInterval);
-     }
-}
-function moveArmForLeftController(evt) {
-  if (evt.type === "dir:up") {
-    doArmForward(3,10,100, 10000);
-  } else if (evt.type === "dir:down") {
-    doArmReverse(3,10,100,10000);
-  } else if (evt.type === "dir:left") {
-    doArmForward(4,10,100,10000);
-  } else if (evt.type === "dir:right") {
-    doArmReverse(4,10,100,10000);
+  if (strength > 200) {
+    strength -= 10;
+    doHand(10,strength);
   }
 }
-
-function moveArmForRightController(evt) {
-  if (evt.type === "dir:up") {
-    doArmForward(1,5,100,10000);
-  } else if (evt.type === "dir:down") {
-    doArmReverse(1,5,100,10000);
-  } else if (evt.type === "dir:left") {
-    doArmForward(0,5,100,10000);
-  } else if (evt.type === "dir:right") {
-    doArmReverse(0,5,100,10000);
+function initGrabEvent (event) {
+  doHand(10, 300);
+}
+function moveArmForLeftController(type) {
+  if (type === "dir:up") {
+    doArmForward(3,10,100, 60000);
+  } else if (type === "dir:down") {
+    doArmReverse(3,10,100,60000);
+  } else if (type === "dir:left") {
+    doArmForward(4,10,100,60000);
+  } else if (type === "dir:right") {
+    doArmReverse(4,10,100,60000);
   }
 }
-document.getElementById("grab").addEventListener("mousedown", handleGrabEvent, false);
-document.getElementById("release").addEventListener("mousedown", handleReleaseEvent, false);
-document.getElementById("stop").addEventListener("mousedown", handleStopEvent, false);
-
-var left = nipplejs.create({
+function moveArmForRightController(type) {
+  if (type === "dir:up") {
+    doArmForward(2,10,100,60000);
+  } else if (type === "dir:down") {
+    doArmReverse(2,10,100,60000);
+  } else if (type === "dir:left") {
+    doArmForward(0,10,100,60000);
+  } else if (type === "dir:right") {
+    doArmReverse(0,10,100,60000);
+  }
+}
+/** タッチパッド **/
+const left = nipplejs.create({
       zone: document.getElementById('left_joystick'),
       mode: 'static',
       position: {left: '30%', top: '40%'},
@@ -82,10 +60,10 @@ left.on('start', function (evt, data) {
           if (leftInterval !== null) {
             clearInterval(leftInterval);
           }
-          moveArmForLeftController(evt);
+          moveArmForLeftController(evt.type);
           leftInterval = setInterval(function(){
             console.log("left:" + evt.type);
-            moveArmForLeftController(evt);
+            moveArmForLeftController(evt.type);
           }, 10000);
 }).on('end', function (evt, data) {
       console.log("left:" + evt.type);
@@ -93,7 +71,7 @@ left.on('start', function (evt, data) {
       stopAllArmMove();
 });
 
-var right = nipplejs.create({
+const right = nipplejs.create({
       zone: document.getElementById('right_joystick'),
       mode: 'static',
       position: {left: '70%', top: '40%'},
@@ -106,14 +84,94 @@ right.on('start', function (evt, data) {
         if (rightInterval !== null) {
           clearInterval(rightInterval);
         }
-        moveArmForRightController(evt);
+        moveArmForRightController(evt.type);
         rightInterval = setInterval(function(){
           console.log("right:" + evt.type);
-          moveArmForRightController(evt);
-        }, 1000);
+          moveArmForRightController(evt.type);
+        }, 10000);
      }
 ).on('end', function (evt, data) {
       console.log("right:" + evt.type);
       clearInterval(rightInterval);
       stopAllArmMove();
+});
+
+
+/** ゲームパッド **/
+const gamepad = new Gamepad();
+
+// oボタン:掴む
+gamepad.on('press', 'button_2', e => {
+    console.log(`${e.button} was pressed!`);
+    handleGrabEvent();
+});
+// xボタン:離す
+gamepad.on('press', 'button_1', e => {
+    console.log(`${e.button} was hold!`);
+    handleReleaseEvent();
+});
+// □ボタン:初期値
+gamepad.on('press', 'button_3', e => {
+    console.log(`${e.button} was hold!`);
+    initGrabEvent();
+});
+
+gamepad.on('press', 'stick_axis_left', e => {
+    console.log(`${e.value[0]} : ${e.value[1]}`)
+    if (e.value[0] <= -0.3 && (e.value[1] >= -0.3 && e.value[1] <= 0.3)) {
+      console.log("左");
+      moveArmForLeftController("dir:left");
+    } else if ((e.value[0] >= -0.3 && e.value[0] <= 0.3) && e.value[1] <= 0) {
+      console.log("上");
+      moveArmForLeftController("dir:up");
+    } else if (e.value[0] >= 0 && (e.value[1] >= -0.3 && e.value[1] <= 0.3)) {
+      console.log("右");
+      moveArmForLeftController("dir:right");
+    } else if ((e.value[0] >= -0.3 && e.value[0] <= 0.3) && e.value[1] >= 0) {
+      console.log("下");
+      moveArmForLeftController("dir:down");
+    }
+
+});
+
+gamepad.on('release', 'stick_axis_left', e => {
+  stopAllArmMove();
+});
+
+gamepad.on('press', 'stick_axis_right', e => {
+  console.log(`${e.value[0]} : ${e.value[1]}`)
+  if (e.value[0] <= -0.3 && (e.value[1] >= -0.3 && e.value[1] <= 0.3)) {
+    console.log("左");
+    moveArmForRightController("dir:left");
+  } else if ((e.value[0] >= -0.3 && e.value[0] <= 0.3) && e.value[1] <= 0) {
+    console.log("上");
+    moveArmForRightController("dir:up");
+  } else if (e.value[0] >= 0 && (e.value[1] >= -0.3 && e.value[1] <= 0.3)) {
+    console.log("右");
+    moveArmForRightController("dir:right");
+  } else if ((e.value[0] >= -0.3 && e.value[0] <= 0.3) && e.value[1] >= 0) {
+    console.log("下");
+    moveArmForRightController("dir:down");
+  }
+});
+gamepad.on('release', 'stick_axis_right', e => {
+  stopAllArmMove();
+});
+
+gamepad.on('press', 'd_pad_left', e => {
+  console.log(`${e.button}`)
+  doArmForward(1,10,100,500);
+});
+
+gamepad.on('release', 'd_pad_left', e => {
+  console.log(`${e.button}`)
+  stopAllArmMove();
+});
+gamepad.on('press', 'd_pad_right', e => {
+  console.log(`${e.button}`)
+  doArmReverse(1,10,100,500);
+});
+gamepad.on('press', 'd_pad_right', e => {
+  console.log(`${e.button}`)
+  stopAllArmMove();
 });

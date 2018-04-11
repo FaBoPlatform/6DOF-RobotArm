@@ -40,7 +40,7 @@ public class RobotArm implements IRobtArm {
     private static final int LED0_OFF_L = 0x08;
     private static final int LED0_OFF_H = 0x09;
 
-
+    private Object mLock = new Object();
     public RobotArm() {
         init();
     }
@@ -98,19 +98,20 @@ public class RobotArm implements IRobtArm {
                     } catch (InterruptedException e) {
                         Log.e(TAG, "Interrupted1", e);
                     }
-                    setHz(hz);
-                    setChannelValue(channel,  0, value);
+                    synchronized (mLock) {
+                        setHz(hz);
+                        setChannelValue(channel, 0, value);
+                    }
                     try {
                         Thread.sleep((long) time);
                     } catch (InterruptedException e) {
                         Log.e(TAG, "Interrupted2", e);
                     }
-                    setChannelValue(channel,  0, 0);
+                    setChannelValue(channel, 0, 0);
 
                 } catch (IOException e) {
                     Log.e(TAG, "Error on PeripheralIO API", e);
                 }
-
             }
         }).start();
     }
@@ -125,12 +126,14 @@ public class RobotArm implements IRobtArm {
         }).start();
     }
     @Override
-    public void grabHand(final int hz, final int value, final int time) {
+    public void grabHand(final int hz, final int value) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                setHz(hz);
-                setChannelValue(5,  0, value);
+                synchronized (mLock) {
+                    setHz(hz);
+                    setChannelValue(5, 0, value);
+                }
                 try {
                     Thread.sleep((long) 50);
                 } catch (InterruptedException e) {

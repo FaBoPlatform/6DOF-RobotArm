@@ -78,22 +78,10 @@
                         "type": "string"
                     },
                     {
-                        "name": "frequency",
+                        "name": "channel",
                         "in": "formData",
-                        "required": false,
+                        "required": true,
                         "type": "integer"
-                    },
-                    {
-                        "name": "speed",
-                        "in": "formData",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "duration",
-                        "in": "formData",
-                        "required": false,
-                        "type": "number"
                     }
                 ],
                 "responses": {
@@ -132,16 +120,10 @@
                         "type": "integer"
                     },
                     {
-                        "name": "duty",
+                        "name": "speed",
                         "in": "formData",
                         "required": false,
                         "type": "integer"
-                    },
-                    {
-                        "name": "enabled",
-                        "in": "formData",
-                        "required": false,
-                        "type": "boolean"
                     }
                 ],
                 "responses": {
@@ -149,34 +131,6 @@
                         "description": "",
                         "schema": {
                             "$ref": "#/definitions/MotorControlResponse"
-                        },
-                        "examples": {
-                            "application/json": {
-                                "result": 0,
-                                "product": "Example System",
-                                "version": "1.0.0"
-                            }
-                        }
-                    }
-                },
-                "x-type": "one-shot"
-            },
-            "delete": {
-                "summary": "",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "serviceId",
-                        "in": "query",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/ControlResponse"
                         },
                         "examples": {
                             "application/json": {

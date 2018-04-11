@@ -73,39 +73,17 @@ public class MyRobotarmProfile extends DConnectProfile {
             public boolean onRequest(final Intent request, final Intent response) {
                 Integer frequency = parseInteger(request, "frequency");
                 Integer speed = parseInteger(request, "speed");
-                Integer duration = parseInteger(request, "duration");
                 IRobtArm arm = ((MyMessageService) getContext()).getRobotArm();
                 if (arm == null) {
                     MessageUtils.setIllegalDeviceStateError(response);
                     return true;
                 }
-                arm.grabHand(frequency, speed, duration);
+                arm.grabHand(frequency, speed);
                 setResult(response, DConnectMessage.RESULT_OK);
                 return true;
             }
         });
 
-        // DELETE /gotapi/robotarm/hand
-        addApi(new DeleteApi() {
-            @Override
-            public String getAttribute() {
-                return "hand";
-            }
-
-            @Override
-            public boolean onRequest(final Intent request, final Intent response) {
-                String serviceId = (String) request.getExtras().get("serviceId");
-
-                IRobtArm arm = ((MyMessageService) getContext()).getRobotArm();
-                if (arm == null) {
-                    MessageUtils.setIllegalDeviceStateError(response);
-                    return true;
-                }
-//                arm.grabHand(120, 25, false);
-                setResult(response, DConnectMessage.RESULT_OK);
-                return true;
-            }
-        });
     }
 
     @Override

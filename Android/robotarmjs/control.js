@@ -21,7 +21,7 @@ function doArmForward(arm, hz, value, duration) {
       console.log('Response: ', json);
     }
   }, function(errorCode, errorMessage) {
-    alert('PUT robotarm/motor', errorCode, errorMessage);
+    console.log('PUT robotarm/motor'+errorCode+errorMessage);
   });
 
 }
@@ -49,7 +49,7 @@ function doArmReverse(arm, hz, value, duration) {
       console.log('Response: ', json);
     }
   }, function(errorCode, errorMessage) {
-    alert('PUT robotarm/motor', errorCode, errorMessage);
+    console.log('PUT robotarm/motor'+errorCode+errorMessage);
   });
 
 }
@@ -72,22 +72,18 @@ function doArmStop(arm) {
       console.log('Response: ', json);
     }
   }, function(errorCode, errorMessage) {
-    alert('DELETE robotarm/motor', errorCode, errorMessage);
+    console.log('DELETE robotarm/motor'+errorCode+":"+errorMessage);
   });
 
 }
 
-
-
-
-function doHand(hz, value, duration) {
+function doHand(hz, value) {
   var builder = new dConnect.URIBuilder();
   builder.setProfile('robotarm');
   builder.setAttribute('hand');
   builder.setServiceId(armId);
   builder.addParameter('frequency', hz);
   builder.addParameter('speed', value);
-  builder.addParameter('duration', duration);
   builder.setHost(ip)
   var uri = builder.build();
 
@@ -100,30 +96,7 @@ function doHand(hz, value, duration) {
       console.log('Response: ', json);
     }
   }, function(errorCode, errorMessage) {
-    alert('PUT robotarm/motor', errorCode, errorMessage);
-  });
-
-}
-
-
-function doHandStop() {
-  var builder = new dConnect.URIBuilder();
-  builder.setHost(ip)
-  builder.setProfile('robotarm');
-  builder.setAttribute('hand');
-  builder.setServiceId(armId);
-  var uri = builder.build();
-
-  if (DEBUG) {
-    console.log('Uri:' + uri);
-  }
-
-  dConnect.delete(uri, null, null, function(json) {
-    if (DEBUG) {
-      console.log('Response: ', json);
-    }
-  }, function(errorCode, errorMessage) {
-    alert('DELETE robotarm/motor', errorCode, errorMessage);
+    console.log('PUT robotarm/hand'+errorCode +":" +errorMessage);
   });
 
 }

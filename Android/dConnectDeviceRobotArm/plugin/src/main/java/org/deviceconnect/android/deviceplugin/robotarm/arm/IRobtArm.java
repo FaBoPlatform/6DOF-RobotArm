@@ -6,7 +6,7 @@ public interface IRobtArm {
     boolean isRobotArm();
     void rotate(int channel, boolean turn, int hz, int value, int time);
     void stopArmRotation(int channel);
-    void grabHand(final int hz, final int value, final int time);
+    void grabHand(final int hz, final int value);
     void releaseHand();
     void stopHand();
 
