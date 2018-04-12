@@ -26,75 +26,75 @@ function initGrabEvent (event) {
 }
 function moveArmForLeftController(type) {
   if (type === "dir:up") {
-    doArmForward(3,10,100, 60000);
+    doArmForward(3,50,100, 60000);
   } else if (type === "dir:down") {
-    doArmReverse(3,10,100,60000);
+    doArmReverse(3,50,100,60000);
   } else if (type === "dir:left") {
-    doArmForward(4,10,100,60000);
+    doArmForward(4,50,100,60000);
   } else if (type === "dir:right") {
-    doArmReverse(4,10,100,60000);
+    doArmReverse(4,50,100,60000);
   }
 }
 function moveArmForRightController(type) {
   if (type === "dir:up") {
-    doArmForward(2,10,100,60000);
+    doArmForward(2,50,100,60000);
   } else if (type === "dir:down") {
-    doArmReverse(2,10,100,60000);
+    doArmReverse(2,50,100,60000);
   } else if (type === "dir:left") {
-    doArmForward(0,10,100,60000);
+    doArmForward(0,50,100,60000);
   } else if (type === "dir:right") {
-    doArmReverse(0,10,100,60000);
+    doArmReverse(0,50,100,60000);
   }
 }
 /** タッチパッド **/
-const left = nipplejs.create({
-      zone: document.getElementById('left_joystick'),
-      mode: 'static',
-      position: {left: '30%', top: '40%'},
-      color: 'black'
-});
-left.on('start', function (evt, data) {
-      console.log("left:" + evt.type);
-}).on('dir:up dir:left dir:down dir:right',
-      function (evt, data) {
-          if (leftInterval !== null) {
-            clearInterval(leftInterval);
-          }
-          moveArmForLeftController(evt.type);
-          leftInterval = setInterval(function(){
-            console.log("left:" + evt.type);
-            moveArmForLeftController(evt.type);
-          }, 10000);
-}).on('end', function (evt, data) {
-      console.log("left:" + evt.type);
-      clearInterval(leftInterval);
-      stopAllArmMove();
-});
-
-const right = nipplejs.create({
-      zone: document.getElementById('right_joystick'),
-      mode: 'static',
-      position: {left: '70%', top: '40%'},
-      color: 'black'
-});
-right.on('start', function (evt, data) {
-      console.log("right:" + evt.type);
-}).on('dir:up dir:left dir:down dir:right',
-      function (evt, data) {
-        if (rightInterval !== null) {
-          clearInterval(rightInterval);
-        }
-        moveArmForRightController(evt.type);
-        rightInterval = setInterval(function(){
-          console.log("right:" + evt.type);
-          moveArmForRightController(evt.type);
-        }, 10000);
-     }
-).on('end', function (evt, data) {
-      console.log("right:" + evt.type);
-      clearInterval(rightInterval);
-      stopAllArmMove();
-});
+// const left = nipplejs.create({
+//       zone: document.getElementById('left_joystick'),
+//       mode: 'static',
+//       position: {left: '30%', top: '40%'},
+//       color: 'black'
+// });
+// left.on('start', function (evt, data) {
+//       console.log("left:" + evt.type);
+// }).on('dir:up dir:left dir:down dir:right',
+//       function (evt, data) {
+//           if (leftInterval !== null) {
+//             clearInterval(leftInterval);
+//           }
+//           moveArmForLeftController(evt.type);
+//           leftInterval = setInterval(function(){
+//             console.log("left:" + evt.type);
+//             moveArmForLeftController(evt.type);
+//           }, 10000);
+// }).on('end', function (evt, data) {
+//       console.log("left:" + evt.type);
+//       clearInterval(leftInterval);
+//       stopAllArmMove();
+// });
+//
+// const right = nipplejs.create({
+//       zone: document.getElementById('right_joystick'),
+//       mode: 'static',
+//       position: {left: '70%', top: '40%'},
+//       color: 'black'
+// });
+// right.on('start', function (evt, data) {
+//       console.log("right:" + evt.type);
+// }).on('dir:up dir:left dir:down dir:right',
+//       function (evt, data) {
+//         if (rightInterval !== null) {
+//           clearInterval(rightInterval);
+//         }
+//         moveArmForRightController(evt.type);
+//         rightInterval = setInterval(function(){
+//           console.log("right:" + evt.type);
+//           moveArmForRightController(evt.type);
+//         }, 10000);
+//      }
+// ).on('end', function (evt, data) {
+//       console.log("right:" + evt.type);
+//       clearInterval(rightInterval);
+//       stopAllArmMove();
+// });
 
 
 /** ゲームパッド **/
@@ -160,7 +160,7 @@ gamepad.on('release', 'stick_axis_right', e => {
 
 gamepad.on('press', 'd_pad_left', e => {
   console.log(`${e.button}`)
-  doArmForward(1,10,100,500);
+  doArmForward(1,50,100,500);
 });
 
 gamepad.on('release', 'd_pad_left', e => {
@@ -169,7 +169,7 @@ gamepad.on('release', 'd_pad_left', e => {
 });
 gamepad.on('press', 'd_pad_right', e => {
   console.log(`${e.button}`)
-  doArmReverse(1,10,100,500);
+  doArmReverse(1,50,100,500);
 });
 gamepad.on('press', 'd_pad_right', e => {
   console.log(`${e.button}`)
